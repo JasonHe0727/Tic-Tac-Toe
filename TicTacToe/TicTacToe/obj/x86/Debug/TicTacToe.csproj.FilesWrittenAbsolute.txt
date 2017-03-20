@@ -1,0 +1,6 @@
+/home/jasonhe/MyCode/CSharp/GUI/Tic-Tac-Toe/TicTacToe/TicTacToe/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/jasonhe/MyCode/CSharp/GUI/Tic-Tac-Toe/TicTacToe/TicTacToe/obj/x86/Debug/TicTacToe.gtk-gui.gui.stetic
+/home/jasonhe/MyCode/CSharp/GUI/Tic-Tac-Toe/TicTacToe/TicTacToe/bin/Debug/TicTacToe.exe.mdb
+/home/jasonhe/MyCode/CSharp/GUI/Tic-Tac-Toe/TicTacToe/TicTacToe/bin/Debug/TicTacToe.exe
+/home/jasonhe/MyCode/CSharp/GUI/Tic-Tac-Toe/TicTacToe/TicTacToe/obj/x86/Debug/TicTacToe.exe
+/home/jasonhe/MyCode/CSharp/GUI/Tic-Tac-Toe/TicTacToe/TicTacToe/obj/x86/Debug/TicTacToe.exe.mdb
