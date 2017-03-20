@@ -11,9 +11,23 @@ public partial class MainWindow: Gtk.Window
         ShowAll();
     }
 
+    const int nRows = 3;
+    const int nCols = 3;
+    Button[] cells;
+
     void Initialize()
     {
-        Button[] cells = new Button[3 * 3];
+        this.cells = new Button[nRows * nCols];
+        Image[] circles = new Image[nRows * nCols];
+        Image[] empties = new Image[nRows * nCols];
+        Image[] crossings = new Image[nRows * nCols];
+
+        for (int i = 0; i < circles.Length; i++)
+        {
+            circles[i] = new Image("circle.png");
+            empties[i] = new Image("empty.png");
+            crossings[i] = new Image("crossing.png");
+        }
         for (int i = 0; i < cells.Length; i++)
         {
             cells[i] = new Button();
@@ -21,14 +35,19 @@ public partial class MainWindow: Gtk.Window
             area.SizeAllocate(new Gdk.Rectangle(0, 0, 100, 100));
             cells[i].Image = area;
             area.ExposeEvent += OnExpose;*/
-            cells[i].Clicked += DrawCircle;
+            //cells[i].Clicked += DrawCircle;
+            //circles[i] = new Image("circle.png");
+            //cells[i].Image = circles[i];
+            cells[i].Image = empties[i];
+            cells[i].Clicked += 
+                (object sender, EventArgs e) => ((Button)sender).Image = crossings[Array.IndexOf(cells, (Button)sender)];
             this.table.Attach(cells[i], (uint)i % 3, (uint)i % 3 + 1, (uint)i / 3, (uint)i / 3 + 1);
         }
 
     }
 
-    //    static readonly Image Circle = new Image("circle.png");
-    //    static readonly Image Cross = new Image("cross.png");
+    //static readonly Image Circle = new Image("circle.png");
+    //static readonly Image Cross = new Image("cross.png");
 
     void DrawCircle(object sender, EventArgs e)
     {

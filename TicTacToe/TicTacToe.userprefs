@@ -3,19 +3,8 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="TicTacToe/MainWindow.cs">
     <Files>
       <File FileName="TicTacToe/Program.cs" Line="1" Column="1" />
-      <File FileName="TicTacToe/MainWindow.cs" Line="50" Column="38" />
+      <File FileName="TicTacToe/MainWindow.cs" Line="44" Column="1" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="TicTacToe" expanded="True">
-            <Node name="TicTacToe" expanded="True">
-              <Node name="MainWindow.cs" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
