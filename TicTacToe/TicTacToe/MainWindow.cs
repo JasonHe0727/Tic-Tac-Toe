@@ -1,5 +1,6 @@
 ﻿using System;
 using Gtk;
+using TicTacToe;
 
 public partial class MainWindow: Gtk.Window
 {
@@ -13,83 +14,87 @@ public partial class MainWindow: Gtk.Window
 
     const int nRows = 3;
     const int nCols = 3;
-    Button[] cells;
+    CellButton[] cells;
+    Lattice lattice;
 
     void Initialize()
     {
-        this.cells = new Button[nRows * nCols];
-        Image[] circles = new Image[nRows * nCols];
-        Image[] empties = new Image[nRows * nCols];
-        Image[] crossings = new Image[nRows * nCols];
-
-        for (int i = 0; i < circles.Length; i++)
-        {
-            circles[i] = new Image("circle.png");
-            empties[i] = new Image("empty.png");
-            crossings[i] = new Image("crossing.png");
-        }
+        this.cells = new CellButton[nRows * nCols];
         for (int i = 0; i < cells.Length; i++)
         {
-            cells[i] = new Button();
-            /*DrawingArea area = new DrawingArea();
-            area.SizeAllocate(new Gdk.Rectangle(0, 0, 100, 100));
-            cells[i].Image = area;
-            area.ExposeEvent += OnExpose;*/
-            //cells[i].Clicked += DrawCircle;
-            //circles[i] = new Image("circle.png");
-            //cells[i].Image = circles[i];
-            cells[i].Image = empties[i];
-            cells[i].Clicked += 
-                (object sender, EventArgs e) => ((Button)sender).Image = crossings[Array.IndexOf(cells, (Button)sender)];
+            cells[i] = new CellButton(i);
+            cells[i].Clicked += CellButton_Clicked;
             this.table.Attach(cells[i], (uint)i % 3, (uint)i % 3 + 1, (uint)i / 3, (uint)i / 3 + 1);
         }
-
+        button_start.Clicked += (object sender, EventArgs e) =>
+        {
+            this.lattice.Reset();
+            ShowLattice();
+        };
+        this.lattice = new Lattice();
+        this.Resizable = false;
     }
 
-    //static readonly Image Circle = new Image("circle.png");
-    //static readonly Image Cross = new Image("cross.png");
-
-    void DrawCircle(object sender, EventArgs e)
+    void CellButton_Clicked(object sender, EventArgs e)
     {
-        Button button = (Button)sender;
-        using (Cairo.Context cr = Gdk.CairoHelper.Create(button.GdkWindow))
+        CellButton button = (CellButton)sender;
+        int number = button.Id;
+        if (lattice[number / 3, number % 3] != CellType.Empty)
         {
-            cr.LineWidth = 9;
-            cr.SetSourceRGB(0.7, 0.2, 0.0);
-
-            int width, height;
-            width = button.Allocation.Width;
-            height = button.Allocation.Height;
-            cr.Translate(width / 2, height / 2);
-            cr.Arc(0, 0, (width < height ? width : height) / 2 - 10, 0, 2 * Math.PI);
-            cr.StrokePreserve();
-
-            cr.SetSourceRGB(0.3, 0.4, 0.6);
-            cr.Fill();
-            cr.GetTarget().Dispose();
+            return;
+        }
+        else
+        {
+            lattice[number / 3, number % 3] = CellType.X;
+            var current = lattice.Current;
+            if (current == Situation.Playing)
+            {
+                lattice.RandomSet(CellType.O);
+            }
+            current = lattice.Current;
+            if (current != Situation.Playing)
+            {
+                ShowLattice();
+                using (var dialog = new MessageDialog(
+                                        this, 
+                                        DialogFlags.DestroyWithParent, 
+                                        MessageType.Info, 
+                                        ButtonsType.Ok, 
+                                        "result = {0}", current))
+                {
+                    dialog.Run();
+                    dialog.Hide();
+                }
+            }
+            else
+            {
+                ShowLattice();
+            }
         }
     }
 
-    void OnExpose(object sender, ExposeEventArgs args)
+    void ShowLattice()
     {
-        //DrawingArea area = (DrawingArea)sender;
-        Button area = (Button)sender;
-        Cairo.Context cr = Gdk.CairoHelper.Create(area.GdkWindow);
+        for (int i = 0; i < lattice.Cells.Length; i++)
+        {
+            if (lattice.Cells[i] == CellType.X)
+            {
+                this.cells[i].DrawCrossing();
+            }
+            else if (lattice.Cells[i] == CellType.O)
+            {
+                this.cells[i].DrawCircle();
+            }
+            else
+            {
+                this.cells[i].Reset();
+            }
+        }
+    }
 
-        cr.LineWidth = 9;
-        cr.SetSourceRGB(0.7, 0.2, 0.0);
-
-        int width, height;
-        width = area.Allocation.Width;
-        height = area.Allocation.Height;
-        cr.Translate(width / 2, height / 2);
-        cr.Arc(0, 0, (width < height ? width : height) / 2 - 10, 0, 2 * Math.PI);
-        cr.StrokePreserve();
-
-        cr.SetSourceRGB(0.3, 0.4, 0.6);
-        cr.Fill();
-        cr.GetTarget().Dispose();
-        ((IDisposable)cr).Dispose();
+    void Play()
+    {
+        lattice.Reset();
     }
 
     protected void OnDeleteEvent(object sender, DeleteEventArgs a)

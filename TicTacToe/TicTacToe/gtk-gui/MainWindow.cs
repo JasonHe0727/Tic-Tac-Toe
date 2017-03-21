@@ -7,7 +7,7 @@ public partial class MainWindow
 	
 	private global::Gtk.Table table;
 	
-	private global::Gtk.Button button1;
+	private global::Gtk.Button button_start;
 	
 	private global::Gtk.Statusbar statusbar1;
 
@@ -31,13 +31,13 @@ public partial class MainWindow
 		global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox [this.table]));
 		w1.Position = 0;
 		// Container child vbox.Gtk.Box+BoxChild
-		this.button1 = new global::Gtk.Button ();
-		this.button1.CanFocus = true;
-		this.button1.Name = "button1";
-		this.button1.UseUnderline = true;
-		this.button1.Label = global::Mono.Unix.Catalog.GetString ("GtkButton");
-		this.vbox.Add (this.button1);
-		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox [this.button1]));
+		this.button_start = new global::Gtk.Button ();
+		this.button_start.CanFocus = true;
+		this.button_start.Name = "button_start";
+		this.button_start.UseUnderline = true;
+		this.button_start.Label = global::Mono.Unix.Catalog.GetString ("Start");
+		this.vbox.Add (this.button_start);
+		global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox [this.button_start]));
 		w2.Position = 1;
 		w2.Expand = false;
 		w2.Fill = false;
